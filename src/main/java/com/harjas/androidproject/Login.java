@@ -3,21 +3,30 @@ package com.harjas.androidproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 
 public class Login extends AppCompatActivity implements View.OnClickListener{
     Button bt1,bt2;
     TextInputLayout e1,e2;
     String name,pass;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,8 +72,58 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         }
 
         else {
+            new LoginDb().execute();
+        }
+    }
+
+    public class LoginDb extends AsyncTask<Void,Void,String>
+    {  String result="";
+
+        @Override
+        protected void onPreExecute() {
             e2.setError(null);
-            Toast.makeText(getApplicationContext(), "login Successful", Toast.LENGTH_SHORT).show();
+            progressBar=findViewById(R.id.progressBar1);
+            progressBar.setVisibility(View.VISIBLE);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+                URL url=new URL("http://18.224.135.157/android/login.php?email="+name+"&pswd="+pass);
+                InputStream stream=url.openConnection().getInputStream();
+                InputStreamReader ir=new InputStreamReader(stream);
+                BufferedReader br=new BufferedReader(ir);
+                String line="";
+                while((line=br.readLine())!=null)
+                {
+                    result=result + line + "\n";
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            String data =s.trim();
+            if(data.matches("true"))
+            {
+//                Toast.makeText(getApplicationContext(), "VALID USER", Toast.LENGTH_SHORT).show();
+                Intent log=new Intent(getApplicationContext(),UserData.class);
+                log.putExtra("EMAIL",name);
+                startActivity(log);
+                finish();
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "INVALID USER", Toast.LENGTH_SHORT).show();
+            }
+            super.onPostExecute(s);
         }
     }
 

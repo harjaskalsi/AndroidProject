@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -139,7 +140,8 @@ public class Register extends AppCompatActivity {
         protected String doInBackground(Void... voids) {
 
             try {
-                URL url = new URL("\n" + "http://3.21.134.195/android/index.php?username=" + name + "&password=" + password + "&email=" + email + "&contact=" + contact);
+                Log.i("checkdata",name+" "+password+" "+email+" "+contact);
+                URL url = new URL("\n" + "http://18.224.135.157/android/index.php?username=" + name + "&password=" + password + "&email=" + email + "&contact=" + contact);
                 //URL is used to fetch data from any server
 
                 InputStream stream=url.openConnection().getInputStream();
