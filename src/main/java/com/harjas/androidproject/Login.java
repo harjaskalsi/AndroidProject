@@ -91,7 +91,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         protected String doInBackground(Void... voids) {
 
             try {
-                URL url=new URL("http://18.224.135.157/android/login.php?email="+name+"&pswd="+pass);
+                URL url=new URL("http://3.133.98.179/android/login.php?email="+name+"&pswd="+pass);
                 InputStream stream=url.openConnection().getInputStream();
                 InputStreamReader ir=new InputStreamReader(stream);
                 BufferedReader br=new BufferedReader(ir);
