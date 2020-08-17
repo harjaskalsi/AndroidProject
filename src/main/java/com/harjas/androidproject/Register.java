@@ -141,7 +141,7 @@ public class Register extends AppCompatActivity {
 
             try {
                 Log.i("checkdata",name+" "+password+" "+email+" "+contact);
-                URL url = new URL("\n" + "http://3.133.98.179/android/index.php?username=" + name + "&password=" + password + "&email=" + email + "&contact=" + contact);
+                URL url = new URL("\n" + "http://13.232.142.121/android/index.php?username=" + name + "&password=" + password + "&email=" + email + "&contact=" + contact);
                 //URL is used to fetch data from any server
 
                 InputStream stream=url.openConnection().getInputStream();

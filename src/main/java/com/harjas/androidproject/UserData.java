@@ -37,7 +37,7 @@ public class UserData extends AppCompatActivity {
 
         Intent intent=getIntent();
         String email1=intent.getStringExtra("EMAIL");
-        url="http://3.133.98.179/android/json.php?email="+email1;
+        url="http://13.232.142.121/android/jsondata.php?email="+email1;
         new LoadUserData().execute();
 
     }
